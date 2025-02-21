@@ -7,14 +7,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
         mp.changePlayerStateBy(mp.getPlayerBySprite(sprite), MultiplayerState.score, 1)
     }
 })
-function doSomething () {
-    return 33
-}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
     if (mp.isButtonPressed(mp.getPlayerBySprite(sprite), mp.MultiplayerButton.A)) {
         scene.cameraShake(4, 500)
         pizza.bumpSprite(sprite, otherSprite)
         sprite.sayText(":D", 500, true)
+        otherSprite.startEffect(effects.ashes, 500)
         mp.changePlayerStateBy(mp.getPlayerBySprite(otherSprite), MultiplayerState.score, -1)
     }
     if (mp.isButtonPressed(mp.getPlayerBySprite(otherSprite), mp.MultiplayerButton.A)) {
@@ -23,14 +21,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherS
         mp.changePlayerStateBy(mp.getPlayerBySprite(sprite), MultiplayerState.score, -1)
     }
 })
-function doSomething2 (text: string) {
-	
-}
 mp.onScore(20, function (thisPlayer) {
     game.gameOver(true)
 })
 let projectile: Sprite = null
 let characters: Image[] = []
+music.stopAllSounds()
 music.play(music.createSong(assets.song`song123`), music.PlaybackMode.LoopingInBackground)
 characters = [
 pizzaassets.P1,
@@ -162,7 +158,7 @@ scene.setBackgroundImage(img`
     `)
 pizza.setPlayersWith(characters, 4)
 game.splash("Press (A) when everyone is", "ready to start the game")
-game.onUpdateInterval(5000, function () {
+game.onUpdateInterval(2000, function () {
     projectile = sprites.createProjectileFromSide(img`
         .............beebbbb............
         ............eebbbb4bb...........
